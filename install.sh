@@ -10,8 +10,8 @@ if [ ! -f /etc/systemd/docker-volume-local-persist.service ]; then
   wget -O docker-volume-local-persist.service https://github.com/MatchbookLab/local-persist/blob/master/init/systemd.service
   sudo mv docker-volume-local-persist.service /etc/systemd/docker-volume-local-persist.service
   sudo systemctl daemon-reload
-  sudo systemctl enable docker-volume-local-persist
-  sudo systemctl start docker-volume-local-persist
+  sudo systemctl enable docker-volume-local-persist.service
+  sudo systemctl start docker-volume-local-persist.service
 fi
 #echo "Running download-container to get all requirements..."
 #docker compose --profile download up --build
