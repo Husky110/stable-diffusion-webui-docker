@@ -1,56 +1,59 @@
-# Stable Diffusion WebUI Docker
+## Fork-Purpose
+The main purpose of this fork is to take the work done by [AbdBarho](https://github.com/AbdBarho) and fix some issues with it.
+In general he did a really great job providing a platform to run Stable Diffusion on Docker.
+I think that there are some flaws in his work tho, which I want to try and resolve:
+- The docker-compose.yaml-file, while being elegant, is way to hard to edit for custom purposes.
+- All containers are set up in a way, that they run as root which then leads to permission-problems on the host-machine.
+- Setting up an environment that serves "everybody" is hard. Especially new people might struggle with leveraging the potential that some of the UIs offer.
+- The project itself is not really beginner-friendly. Be it for beginners to Stable Diffusion or beginners in docker.
 
-Run Stable Diffusion on your machine with a nice UI without any hassle!
+## State of the Fork
+### What works
+- Download-Container
+- A1111 is loadable and does it's job -> still WIP
 
-## Setup & Usage
+### What does not
+- ComfyUI (will be done next)
+- InvokeAI
 
-Visit the wiki for [Setup](https://github.com/AbdBarho/stable-diffusion-webui-docker/wiki/Setup) and [Usage](https://github.com/AbdBarho/stable-diffusion-webui-docker/wiki/Usage) instructions, checkout the [FAQ](https://github.com/AbdBarho/stable-diffusion-webui-docker/wiki/FAQ) page if you face any problems, or create a new issue!
+### What is currently in development
+- I'm still working on A1111. It's done mostly, but the docker-stuff has to be improved.
 
-## Features
 
-This repository provides multiple UIs for you to play around with stable diffusion:
+## Changes to the original Repo and improvements
+- General:
+  - The docker-compose.yaml file is less elegant, but way better manageable.
+  - All direct-bind-mounts have been removed for volume-mounts.
+    - That process required some additional downloads in the download-container.
+  - All containers are set to run as user 1000:1000 to accommodate the change from direct bind-mounts to volumes.
+- A1111-SD-Webui:
+  - The config-builder has been replaced with a working default-config.
+  - Clearing up all temp-images on container-start
+  - A1111 removed some vital settings from the main-ui to the Settings-Tab making them invisible. The following settings have been returned to the main-ui:
+    - Restore Faces (txt2img/img2img)
+    - Random-Source for seed (txt2img/img2img) -> set to CPU to make seeds more hardware-stable (see https://github.com/comfyanonymous/ComfyUI/discussions/118)
+    - CLIP set last layer aka "CLIP-SKIP" (txt2img/img2img)
+  - The initial setup comes with some widely-used extensions preinstalled
+    - Regional Prompter (see https://github.com/hako-mikan/sd-webui-regional-prompter)
+    - TiledVAE (see https://github.com/pkuliyi2015/multidiffusion-upscaler-for-automatic1111)
+    - ControlNet (see https://github.com/Mikubill/sd-webui-controlnet)
 
-### [AUTOMATIC1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
+## Added Problems
+Rarely any changes come without some problems that have to be solved in the future. Here they are:
+ - System Requirements
+   - You have to use Linux. Mac in Windows are not supported (I don't know if WSL will work - use at your own risk!)
+     - This is due to limitations set by the local-persistent plugin for docker (see https://github.com/MatchbookLab/local-persist)
+   - For now you are limited to NVIDIA-Graphic-cards if you want to use anything else than the CPU-Versions.
+     - I will look into some changed suggested to make AMD-Cards useable, but having none myself, I can't promise anything.
+     - The good news tho - All settings made are tested on a GTX 1070, which is not really a strong card, so there is a good chance that your old hardware actually supports this repo.
+ - The install-process is a bit more complicated than in the original. It's a bit more than just running two commands. I did my best tho.
 
-[Full feature list here](https://github.com/AUTOMATIC1111/stable-diffusion-webui-feature-showcase), Screenshots:
+## Credits
+Most credits go to [AbdBarho](https://github.com/AbdBarho) for doing the pioneer work. I just added to that. :)
 
-| Text to image                                                                                              | Image to image                                                                                             | Extras                                                                                                     |
-| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| ![](https://user-images.githubusercontent.com/24505302/189541954-46afd772-d0c8-4005-874c-e2eca40c02f2.jpg) | ![](https://user-images.githubusercontent.com/24505302/189541956-5b528de7-1b5d-479f-a1db-d3f5a53afc59.jpg) | ![](https://user-images.githubusercontent.com/24505302/189541957-cf78b352-a071-486d-8889-f26952779a61.jpg) |
+## Licence
+I left all original licences in their respected place.
+For now this repo comes "as is", with no warranties and I take no responsibility for what you do with it.
 
-### [InvokeAI](https://github.com/invoke-ai/InvokeAI)
-
-[Full feature list here](https://github.com/invoke-ai/InvokeAI#features), Screenshots:
-
-| Text to image                                                                                              | Image to image                                                                                             | Extras                                                                                                     |
-| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| ![](https://user-images.githubusercontent.com/24505302/195158552-39f58cb6-cfcc-4141-9995-a626e3760752.jpg) | ![](https://user-images.githubusercontent.com/24505302/195158553-152a0ab8-c0fd-4087-b121-4823bcd8d6b5.jpg) | ![](https://user-images.githubusercontent.com/24505302/195158548-e118206e-c519-4915-85d6-4c248eb10fc0.jpg) |
-
-### [ComfyUI](https://github.com/comfyanonymous/ComfyUI)
-
-[Full feature list here](https://github.com/comfyanonymous/ComfyUI#features), Screenshot:
-
-| Workflow                                                                         |
-| -------------------------------------------------------------------------------- |
-| ![](https://github.com/comfyanonymous/ComfyUI/raw/master/comfyui_screenshot.png) |
-
-## Contributing
-
-Contributions are welcome! **Create a discussion first of what the problem is and what you want to contribute (before you implement anything)**
-
-## Disclaimer
-
-The authors of this project are not responsible for any content generated using this interface.
-
-This license of this software forbids you from sharing any content that violates any laws, produce any harm to a person, disseminate any personal information that would be meant for harm, spread misinformation and target vulnerable groups. For the full list of restrictions please read [the license](./LICENSE).
-
-## Thanks
-
-Special thanks to everyone behind these awesome projects, without them, none of this would have been possible:
-
-- [AUTOMATIC1111/stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
-- [InvokeAI](https://github.com/invoke-ai/InvokeAI)
-- [ComfyUI](https://github.com/comfyanonymous/ComfyUI)
-- [CompVis/stable-diffusion](https://github.com/CompVis/stable-diffusion)
-- [Sygil-webui](https://github.com/Sygil-Dev/sygil-webui)
-- and many many more.
+# Original Content
+For the original documentation and everything see https://github.com/AbdBarho/stable-diffusion-webui-docker

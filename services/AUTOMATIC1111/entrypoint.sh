@@ -2,61 +2,58 @@
 
 set -Eeuo pipefail
 
-# TODO: move all mkdir -p ?
-mkdir -p /data/config/auto/scripts/
-# mount scripts individually
-find "${ROOT}/scripts/" -maxdepth 1 -type l -delete
-cp -vrfTs /data/config/auto/scripts/ "${ROOT}/scripts/"
-
 # Set up config file
-python /docker/config.py /data/config/auto/config.json
+#python /docker/config.py /data/auto/config/config.json <- I'm leaving config.py intact in case we need it again later
 
-if [ ! -f /data/config/auto/ui-config.json ]; then
-  echo '{}' >/data/config/auto/ui-config.json
+if [ ! -f /data/auto/config/ui-config.json ]; then
+  echo '{}' > /data/auto/config/ui-config.json
 fi
 
-if [ ! -f /data/config/auto/styles.csv ]; then
-  touch /data/config/auto/styles.csv
+if [ ! -f /data/auto/config/styles.csv ]; then
+  touch /data/auto/config/styles.csv
 fi
 
-# copy models from original models folder
-mkdir -p /data/models/VAE-approx/ /data/models/karlo/
-
-rsync -a --info=NAME ${ROOT}/models/VAE-approx/ /data/models/VAE-approx/
-rsync -a --info=NAME ${ROOT}/models/karlo/ /data/models/karlo/
-
-declare -A MOUNTS
-
-MOUNTS["/root/.cache"]="/data/.cache"
-MOUNTS["${ROOT}/models"]="/data/models"
-
-MOUNTS["${ROOT}/embeddings"]="/data/embeddings"
-MOUNTS["${ROOT}/config.json"]="/data/config/auto/config.json"
-MOUNTS["${ROOT}/ui-config.json"]="/data/config/auto/ui-config.json"
-MOUNTS["${ROOT}/styles.csv"]="/data/config/auto/styles.csv"
-MOUNTS["${ROOT}/extensions"]="/data/config/auto/extensions"
-MOUNTS["${ROOT}/config_states"]="/data/config/auto/config_states"
-
-# extra hacks
-MOUNTS["${ROOT}/repositories/CodeFormer/weights/facelib"]="/data/.cache"
-
-for to_path in "${!MOUNTS[@]}"; do
-  set -Eeuo pipefail
-  from_path="${MOUNTS[${to_path}]}"
-  rm -rf "${to_path}"
-  if [ ! -f "$from_path" ]; then
-    mkdir -vp "$from_path"
+#running initalization
+if [ ! -f /data/auto/docker-init-complete ]; then
+  echo "Initializing..."
+  cp /docker/default-config.json /data/auto/config/config.json
+  cd ${ROOT}
+  #initialize a symlink for the embeddings
+  rm -rf embeddings && ln -s /data/models/Embeddings embeddings
+  # extensions...
+  if [ ! -d /data/auto/extensions ]; then
+      mkdir /data/auto/extensions
   fi
-  mkdir -vp "$(dirname "${to_path}")"
-  ln -sT "${from_path}" "${to_path}"
-  echo Mounted $(basename "${from_path}")
-done
+  rm -rf extensions && ln -s /data/auto/extensions extensions
+  #adding recommended extensions
+  if [ ! -d /data/auto/extensions/sd-webui-controlnet ]; then
+        cp -rf ${ROOT}/repositories/sd-webui-controlnet /data/auto/extensions/sd-webui-controlnet
+  fi
+  if [ ! -d /data/auto/extensions/multidiffusion-upscaler-for-automatic1111 ]; then
+      cp -rf ${ROOT}/repositories/multidiffusion-upscaler-for-automatic1111 /data/auto/extensions/multidiffusion-upscaler-for-automatic1111
+  fi
+  if [ ! -d /data/auto/extensions/sd-webui-regional-prompter ]; then
+      cp -rf ${ROOT}/repositories/sd-webui-regional-prompter /data/auto/extensions/sd-webui-regional-prompter
+  fi
+
+  ln -s /data/auto/config/config.json config.json
+  ln -s /data/auto/config/ui-config.json ui-config.json
+  ln -s /data/auto/config/styles.csv styles.csv
+
+  #Codeformer
+  if [ ! -d ${ROOT}/repositories/CodeFormer/weights/facelib ]; then
+    mkdir -p ${ROOT}/repositories/CodeFormer/weights/facelib
+  else
+    rm -rf /codeformer_facelib/*
+    mv -v ${ROOT}/repositories/CodeFormer/weights/facelib /codeformer_facelib
+    rm -rf ${ROOT}/repositories/CodeFormer/weights/facelib
+  fi
+  ln -s /codeformer_facelib ${ROOT}/repositories/CodeFormer/weights/facelib
+  #finalizing
+  touch /data/auto/docker-init-complete
+fi
 
 echo "Installing extension dependencies (if any)"
-
-# because we build our container as root:
-chown -R root ~/.cache/
-chmod 766 ~/.cache/
 
 shopt -s nullglob
 # For install.py, please refer to https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Developing-extensions#installpy
@@ -64,18 +61,18 @@ list=(./extensions/*/install.py)
 for installscript in "${list[@]}"; do
   EXTNAME=`echo $installscript | cut -d '/' -f 3`
   # Skip installing dependencies if extension is disabled in config
-  if `jq -e ".disabled_extensions|any(. == \"$EXTNAME\")" config.json`; then
+  if `jq -e ".disabled_extensions|any(. == \"$EXTNAME\")" ${ROOT}/config.json`; then
     echo "Skipping disabled extension ($EXTNAME)"
     continue
   fi
   PYTHONPATH=${ROOT} python "$installscript"
 done
 
-if [ -f "/data/config/auto/startup.sh" ]; then
+if [ -f "/data/auto/config/startup.sh" ]; then
   pushd ${ROOT}
   echo "Running startup script"
-  . /data/config/auto/startup.sh
+  . /data/auto/config/startup.sh
   popd
 fi
-
+rm -rf /output/temp/auto/*.*
 exec "$@"

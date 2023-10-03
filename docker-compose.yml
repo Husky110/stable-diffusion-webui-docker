@@ -1,20 +1,17 @@
 version: '3.9'
 
 x-base_service: &base_service
-    ports:
-      - "${WEBUI_PORT:-7860}:7860"
-    volumes:
-      - &v1 ./data:/data
-      - &v2 ./output:/output
-    stop_signal: SIGKILL
-    tty: true
-    deploy:
-      resources:
-        reservations:
-          devices:
-              - driver: nvidia
-                device_ids: ['0']
-                capabilities: [compute, utility]
+  ports:
+    - "${WEBUI_PORT:-7860}:7860"
+  stop_signal: SIGKILL
+  tty: true
+  deploy:
+    resources:
+      reservations:
+        devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [compute, utility]
 
 name: webui-docker
 
@@ -23,28 +20,46 @@ services:
     build: ./services/download/
     profiles: ["download"]
     volumes:
-      - *v1
+      - ./data:/data
+      - ./caches/auto/multiple:/.cache
+      - ./caches/auto/configs:/.config
+    user: 1000:1000
 
   auto: &automatic
     <<: *base_service
     profiles: ["auto"]
+    container_name: "sd-auto-gpu"
     build: ./services/AUTOMATIC1111
     image: sd-auto:67
+    volumes:
+      - ./data/models:/stable-diffusion-webui/models
+      - ./data:/data
+      - ./data/auto/config_states:/stable-diffusion-webui/config_states
+      - ./data/auto/scripts:/stable-diffusion-webui/scripts
+      - ./output:/output
+      - ./caches/auto/codeformer_facelib:/codeformer_facelib
     environment:
+      # Warning: XFormers improves performance, but can mess with seeds! Use with caution...
       - CLI_ARGS=--allow-code --medvram --xformers --enable-insecure-extension-access --api
 
   auto-cpu:
     <<: *automatic
     profiles: ["auto-cpu"]
+    container_name: "sd-auto-cpu"
     deploy: {}
     environment:
       - CLI_ARGS=--no-half --precision full --allow-code --enable-insecure-extension-access --api
 
   invoke: &invoke
     <<: *base_service
+    #TODO: VOLUMES AND SCRIPTS
     profiles: ["invoke"]
+    container_name: "sd-invoke-gpu"
     build: ./services/invoke/
     image: sd-invoke:30
+    volumes:
+      - ./data:/data
+      - ./output:/output
     environment:
       - PRELOAD=true
       - CLI_ARGS=--xformers
@@ -58,9 +73,14 @@ services:
 
   comfy: &comfy
     <<: *base_service
+    #TODO: VOLUMES AND SCRIPTS
     profiles: ["comfy"]
+    container_name: "sd-comfy-gpu"
     build: ./services/comfy/
     image: sd-comfy:5
+    volumes:
+      - ./data:/data
+      - ./output:/output
     environment:
       - CLI_ARGS=
 
@@ -68,6 +88,7 @@ services:
   comfy-cpu:
     <<: *comfy
     profiles: ["comfy-cpu"]
+    container_name: "sd-comfy-gpu"
     deploy: {}
     environment:
       - CLI_ARGS=--cpu

@@ -14,7 +14,7 @@ a111:
   controlnet: models/ControlNet
   gligen: models/GLIGEN
   clip: models/CLIPEncoder
-  embeddings: embeddings
+  embeddings: models/Embeddings
 
   custom_nodes: config/comfy/custom_nodes
 

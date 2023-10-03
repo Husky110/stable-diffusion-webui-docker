@@ -18,12 +18,19 @@ DEFAULT_OUTDIRS = {
   "outdir_txt2img_grids": "/output/txt2img-grids",
   "outdir_img2img_grids": "/output/img2img-grids",
   "outdir_save": "/output/saved",
-  "outdir_init_images": "/output/init-images",
+  "outdir_init_images": "/output/init-images"
 }
 RE_VALID_OUTDIR = re.compile(r"(^/output(/\.?[\w\-\_]+)+/?$)|(^\s?$)")
 
 DEFAULT_OTHER = {
   "font": "DejaVuSans.ttf",
+  # applying custom improvements...
+  "temp_dir": "/output/temp/auto", # so we have it sort of "public" if we need it.
+  # making random-source, CLIP-Skip and face_restoration part of the UI again:
+  "extra_options_txt2img" : ["CLIP_stop_at_last_layers", "face_restoration", "face_restoration_model", "face_restoration_unload", "randn_source"],
+  "extra_options_img2img" : ["CLIP_stop_at_last_layers", "face_restoration", "face_restoration_model", "face_restoration_unload", "randn_source"],
+  # setting default random-source to CPU so that seeds are actually shareable -> see https://github.com/comfyanonymous/ComfyUI/discussions/118
+  "randn_source" : "CPU"
 }
 
 def dict_to_json_file(target_file: str, data: dict):

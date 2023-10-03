@@ -2,15 +2,21 @@
 
 set -Eeuo pipefail
 
-# TODO: maybe just use the .gitignore file to create all of these
-mkdir -vp /data/.cache \
-  /data/embeddings \
-  /data/config/ \
-  /data/models/ \
-  /data/models/Stable-diffusion \
+# EX_TODO: maybe just use the .gitignore file to create all of these -> or maybe not... leaving that here is okay, cause then others can add to their structure aswell.
+
+# shamelessly creating a manageable substructure here...
+mkdir -vp /data/models/Stable-diffusion \
+  /data/models/Lora \
+  /data/models/hypernetworks \
+  /data/models/ControlNet \
+  /data/models/ESRGAN \
+  /data/models/Embeddings \
   /data/models/GFPGAN \
   /data/models/RealESRGAN \
   /data/models/LDSR \
+  /data/models/SwinIR \
+  /data/models/VAE-approx \
+  /data/models/karlo \
   /data/models/VAE
 
 echo "Downloading, this might take a while..."

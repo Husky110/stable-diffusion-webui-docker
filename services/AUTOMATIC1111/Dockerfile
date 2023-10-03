@@ -13,6 +13,10 @@ RUN . /clone.sh BLIP https://github.com/salesforce/BLIP.git 48211a1594f1321b00f1
 RUN . /clone.sh k-diffusion https://github.com/crowsonkb/k-diffusion.git ab527a9a6d347f364e3d185ba6d714e22d80cb3c
 RUN . /clone.sh clip-interrogator https://github.com/pharmapsychotic/clip-interrogator 2cf03aaf6e704197fd0dae7c7f96aa59cf1b11c9
 RUN . /clone.sh generative-models https://github.com/Stability-AI/generative-models 45c443b316737a4ab6e40413d7794a7f5657c19f
+# adding extention-recommendations aswell
+RUN . /clone.sh sd-webui-controlnet https://github.com/Mikubill/sd-webui-controlnet 7a4805c8ea3256a0eab3512280bd4f84ca0c8182
+RUN . /clone.sh multidiffusion-upscaler-for-automatic1111 https://github.com/pkuliyi2015/multidiffusion-upscaler-for-automatic1111 f9f8073e64f4e682838f255215039ba7884553bf
+RUN . /clone.sh sd-webui-regional-prompter https://github.com/hako-mikan/sd-webui-regional-prompter 029ecedd550b5d6899206786128895e5e452e34f
 
 
 FROM alpine:3.17 as xformers
@@ -20,7 +24,7 @@ RUN apk add --no-cache aria2
 RUN aria2c -x 5 --dir / --out wheel.whl 'https://github.com/AbdBarho/stable-diffusion-webui-docker/releases/download/6.0.0/xformers-0.0.21.dev544-cp310-cp310-manylinux2014_x86_64-pytorch201.whl'
 
 
-FROM python:3.10.9-slim
+FROM python:3.10-slim
 
 ENV DEBIAN_FRONTEND=noninteractive PIP_PREFER_BINARY=1
 
@@ -77,14 +81,29 @@ RUN --mount=type=cache,target=/root/.cache/pip \
   git reset --hard ${SHA} && \
   pip install -r requirements_versions.txt
 
-COPY . /docker
+RUN rm -rf ${ROOT}/models #we don't need these here anymore...
+RUN rm -rf ${ROOT}/scripts #we don't need these here anymore...
+
+## and now we have to tamper with A1111's init-process, cause it does not like symlinks...
+#RUN sed -i '132d' ${ROOT}/modules/sd_models.py #for the checkpoint-folder
+#RUN sed -i '15d' ${ROOT}/modules/shared_init.py #for the hypernetworks-folder
+
+COPY --chown=1000 . /docker
+
+RUN chown -R 1000:1000 ${ROOT}
+
+RUN mkdir /data /output /codeformer_facelib ${ROOT}/models ${ROOT}/scripts /.cache /.config /.local
+RUN chown -R 1000:1000 /data /output /codeformer_facelib ${ROOT}/models /.cache /.config /.local
+VOLUME ["/data", "/output", "/codeformer_facelib", "${ROOT}/models", "${ROOT}/scripts", "/.cache", "/.config"]
+
+# one of the ugliest hacks I ever wrote
+RUN sed -i 's/in_app_dir = .*/in_app_dir = True/g' /usr/local/lib/python3.10/site-packages/gradio/routes.py
+
+USER 1000:1000
 
 RUN \
-  python3 /docker/info.py ${ROOT}/modules/ui.py && \
-  mv ${ROOT}/style.css ${ROOT}/user.css && \
-  # one of the ugliest hacks I ever wrote \
-  sed -i 's/in_app_dir = .*/in_app_dir = True/g' /usr/local/lib/python3.10/site-packages/gradio/routes.py && \
-  git config --global --add safe.directory '*'
+  python3 /docker/info.py ${ROOT}/modules/ui.py && mv ${ROOT}/style.css ${ROOT}/user.css
+  #git config --global --add safe.directory '*' <--- why do we need this!?
 
 WORKDIR ${ROOT}
 ENV NVIDIA_VISIBLE_DEVICES=all
