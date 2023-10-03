@@ -13,5 +13,5 @@ if [ ! -f /etc/systemd/docker-volume-local-persist.service ]; then
   sudo systemctl enable docker-volume-local-persist
   sudo systemctl start docker-volume-local-persist
 fi
-#echo "Running download-container to get all requirements..."
-#docker compose --profile download up --build
+echo "Running download-container to get all requirements..."
+docker compose --profile download up --build

@@ -48,8 +48,9 @@ I think that there are some flaws in his work tho, which I want to try and resol
 ## Added Problems
 Rarely any changes come without some problems that have to be solved in the future. Here they are:
  - System Requirements
-   - You have to use Linux. Mac in Windows are not supported (I don't know if WSL will work - use at your own risk!)
+   - You have to use Linux (especially one with systemd - like Debian or Ubuntu). Mac and Windows are not supported (I don't know if WSL will work - use at your own risk!)
      - This is due to limitations set by the local-persistent plugin for docker (see https://github.com/MatchbookLab/local-persist)
+     - If you can figure out a way to run this natively on CentOS or how to set it up properly on arch - feel free to contribute!
    - For now you are limited to NVIDIA-Graphic-cards if you want to use anything else than the CPU-Versions.
      - I will look into some changed suggested to make AMD-Cards useable, but having none myself, I can't promise anything.
      - The good news tho - All settings made are tested on a GTX 1070, which is not really a strong card, so there is a good chance that your old hardware actually supports this repo.
