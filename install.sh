@@ -7,7 +7,7 @@ if [ ! -f /usr/bin/docker-volume-local-persist ]; then
   sudo mv docker-volume-local-persist /usr/bin/docker-volume-local-persist
 fi
 if [ ! -f /etc/systemd/docker-volume-local-persist.service ]; then
-  wget -O docker-volume-local-persist.service https://github.com/MatchbookLab/local-persist/blob/master/init/systemd.service
+  wget -O docker-volume-local-persist.service https://raw.githubusercontent.com/MatchbookLab/local-persist/master/init/systemd.service
   sudo mv docker-volume-local-persist.service /etc/systemd/docker-volume-local-persist.service
   sudo systemctl daemon-reload
   sudo systemctl enable docker-volume-local-persist.service
