@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if[ ! -f /usr/bin/docker-volume-local-persist ]; then
   echo "Installing local-persist driver to docker (will ask you for your root-password!)..."
   wget https://github.com/MatchbookLab/local-persist/releases/download/v1.3.0/local-persist-linux-amd64
