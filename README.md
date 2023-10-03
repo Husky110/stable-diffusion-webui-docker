@@ -8,8 +8,11 @@ I think that there are some flaws in his work tho, which I want to try and resol
 - The project itself is not really beginner-friendly. Be it for beginners to Stable Diffusion or beginners in docker.
 
 ## How to use
-1. run install.sh and wait for it to finish
-2. run `docker compose --profile [ui] up --build` -> where [ui] is one of invoke, auto, auto-cpu, comfy, or comfy-cpu.
+### Setup
+1. Set up docker (see https://docs.docker.com/engine/install/) -> This repo is tested on Ubuntu 22.04 LTS
+2. run install.sh and wait for it to finish
+### Usage
+1. run `docker compose --profile [ui] up --build` -> where [ui] is one of invoke, auto, auto-cpu, comfy, or comfy-cpu.
 
 ## State of the Fork
 ### What works
