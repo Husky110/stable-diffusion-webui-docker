@@ -1,4 +1,7 @@
 #!/bin/bash
+if [ ! -f .env ]; then
+  cp .env.default .env
+fi
 sed -i -e "s|!REPLACEWITHPROJECTPATH!|$PWD|g" .env #this has to be done, otherwise docker uses the wrong volume-paths and fails.
 echo "This script will guide you through the installation-process."
 echo "Step 1 - We creating required folder-structure in the project-root..."
@@ -18,9 +21,6 @@ mkdir -vp ./data/models/Checkpoints \
   ./data/models/VAE
 echo "Step 1 is done..."
 echo "In Step 2 we will setup your environment..."
-if [ ! -f .env ]; then
-  cp .env.default .env
-fi
 echo "Step 2 - You can leave your .env-file on default values if you like."
 echo "Step 2 - But I highly recommend that you at least go through it!"
 read -p "Step 2 - Have you gone through the .env-file and modified it to your likings? (yes/no) " yn
