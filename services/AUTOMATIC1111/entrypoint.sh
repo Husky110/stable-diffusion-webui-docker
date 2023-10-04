@@ -20,6 +20,7 @@ if [ ! -f /data/auto/docker-init-complete ]; then
   cd ${ROOT}
   #initialize a symlink for the embeddings
   rm -rf embeddings && ln -s /data/models/Embeddings embeddings
+
   # extensions...
   if [ ! -d /data/auto/extensions ]; then
       mkdir /data/auto/extensions

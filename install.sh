@@ -13,5 +13,30 @@ if [ ! -f /etc/systemd/docker-volume-local-persist.service ]; then
   sudo systemctl enable docker-volume-local-persist
   sudo systemctl start docker-volume-local-persist
 fi
-echo "Running download-container to get all requirements..."
-docker compose --profile download up --build
+echo "Creating required folder-structure..."
+mkdir -vp ./data/models/Checkpoints \
+  ./data/models/Lora \
+  ./data/models/Hypernetworks \
+  ./data/models/ControlNet \
+  ./data/models/ESRGAN \
+  ./data/models/Embeddings \
+  ./data/models/GFPGAN \
+  ./data/models/RealESRGAN \
+  ./data/models/LDSR \
+  ./data/models/SwinIR \
+  ./data/models/VAE-approx \
+  ./data/models/karlo \
+  ./data/models/VAE
+
+read -p "Have you read and setup the .env-file? (yes/no) " yn
+
+case $yn in
+	yes ) echo ok, we will proceed;;
+	no ) echo exiting...;
+		exit;;
+	* ) echo invalid response;
+		exit 1;;
+esac
+
+#echo "Running download-container to get all requirements..."
+#docker compose --profile download up --build

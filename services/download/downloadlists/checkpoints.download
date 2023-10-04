@@ -1,0 +1,4 @@
+https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt
+  out=v1-5-pruned-emaonly.ckpt
+https://huggingface.co/runwayml/stable-diffusion-inpainting/resolve/main/sd-v1-5-inpainting.ckpt
+  out=sd-v1-5-inpainting.ckpt
