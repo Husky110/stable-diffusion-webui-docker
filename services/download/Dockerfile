@@ -6,6 +6,7 @@ RUN mkdir -p /data/checkpoints \
     /data/VAE \
     /data/VAE-approx \
     /data/GFPGAN \
+    /data/Codeformer \
     /data/RealESRGAN \
     /data/LDSR \
     /data/karlo
@@ -14,6 +15,7 @@ VOLUME /data/checkpoints \
     /data/VAE \
     /data/VAE-approx \
     /data/GFPGAN \
+    /data/Codeformer \
     /data/RealESRGAN \
     /data/LDSR \
     /data/karlo

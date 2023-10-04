@@ -2,3 +2,5 @@ https://github.com/AUTOMATIC1111/stable-diffusion-webui/raw/5ef669de080814067961
   out=karlo/ViT-L-14_stats.th
 https://github.com/AUTOMATIC1111/stable-diffusion-webui/raw/5ef669de080814067961f28357256e8fe27544f4/models/VAE-approx/model.pt
   out=VAE-approx/model.pt
+https://github.com/sczhou/CodeFormer/releases/download/v0.1.0/codeformer.pth
+  out=Codeformer/codeformer.pth

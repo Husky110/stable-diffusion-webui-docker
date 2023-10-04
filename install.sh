@@ -21,6 +21,7 @@ mkdir -vp ./data/models/Checkpoints \
   ./data/models/Lora \
   ./data/models/Hypernetworks \
   ./data/models/ControlNet \
+  ./data/models/Codeformer \
   ./data/models/ESRGAN \
   ./data/models/Embeddings \
   ./data/models/GFPGAN \

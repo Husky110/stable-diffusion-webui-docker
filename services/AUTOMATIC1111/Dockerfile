@@ -91,6 +91,7 @@ VOLUME /stable-diffusion-webui/models/Stable-diffusion \
   /stable-diffusion-webui/models/VAE \
   /stable-diffusion-webui/models/VAE-approx \
   /stable-diffusion-webui/models/ESRGAN \
+  /stable-diffusion-webui/models/Codeformer \
   /stable-diffusion-webui/models/RealESRGAN \
   /stable-diffusion-webui/models/GFPGAN \
   /stable-diffusion-webui/models/LSDR \
