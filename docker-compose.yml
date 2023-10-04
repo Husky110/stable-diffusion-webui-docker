@@ -52,7 +52,7 @@ services:
       - ${VOLUMES_VAE}:/stable-diffusion-webui/models/VAE
       - ${VOLUMES_VAE_APPROX}:/stable-diffusion-webui/models/VAE-approx
       - ${VOLUMES_ESRGAN}:/stable-diffusion-webui/models/ESRGAN
-      - Real${VOLUMES_ESRGAN}:/stable-diffusion-webui/models/RealESRGAN
+      - ${VOLUMES_REALESRGAN}:/stable-diffusion-webui/models/RealESRGAN
       - ${VOLUMES_GFPGAN}:/stable-diffusion-webui/models/GFPGAN
       - ${VOLUMES_LDSR}:/stable-diffusion-webui/models/LSDR
       - ${VOLUMES_SWINIR}:/stable-diffusion-webui/models/SWINIR
