@@ -10,8 +10,8 @@ I think that there are some flaws in his work tho, which I want to try and resol
 ## How to use
 ### Setup
 1. Set up docker (see https://docs.docker.com/engine/install/) -> This repo is tested on Ubuntu 22.04 LTS
-2. (Optional) Modify the docker-compose.env-file to your needs and likings -> It's already set with default-values to start.
-4. run install.sh, answer its questions and wait for it to finish
+2. (Optional) Modify the .env-file to your needs and likings. Please pay attention to the comments in there!
+3. Run install.sh, answer its questions and wait for it to finish
 ### Usage
 1. run `docker compose --profile [ui] up --build` -> where [ui] is one of invoke, auto, auto-cpu, comfy, or comfy-cpu.
 
