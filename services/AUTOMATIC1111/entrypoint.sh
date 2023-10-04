@@ -26,19 +26,19 @@ if [ ! -f /data/configs/docker-init-complete ]; then
   if [ "$A1111_INSTALL_RECOMMENDED_EXTENSION_CONTROLNET" == "1" ]
   then
     if [ ! -d /data/auto/extensions/sd-webui-controlnet ]; then
-          cp -rf ${ROOT}/repositories/sd-webui-controlnet /data/auto/extensions/sd-webui-controlnet
+          cp -rf ${ROOT}/repositories/sd-webui-controlnet ${ROOT}/extensions/sd-webui-controlnet
     fi
   fi
   if [ "$A1111_INSTALL_RECOMMENDED_EXTENSION_CONTROLNET" == "1" ]
     then
     if [ ! -d /data/auto/extensions/multidiffusion-upscaler-for-automatic1111 ]; then
-        cp -rf ${ROOT}/repositories/multidiffusion-upscaler-for-automatic1111 /data/auto/extensions/multidiffusion-upscaler-for-automatic1111
+        cp -rf ${ROOT}/repositories/multidiffusion-upscaler-for-automatic1111 ${ROOT}/extensions/multidiffusion-upscaler-for-automatic1111
     fi
   fi
   if [ "$A1111_INSTALL_RECOMMENDED_EXTENSION_CONTROLNET" == "1" ]
     then
     if [ ! -d /data/auto/extensions/sd-webui-regional-prompter ]; then
-        cp -rf ${ROOT}/repositories/sd-webui-regional-prompter /data/auto/extensions/sd-webui-regional-prompter
+        cp -rf ${ROOT}/repositories/sd-webui-regional-prompter ${ROOT}/extensions/sd-webui-regional-prompter
     fi
   fi
 
