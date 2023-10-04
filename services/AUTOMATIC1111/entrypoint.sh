@@ -72,5 +72,5 @@ if [ -f "/data/configs/startup.sh" ]; then
   . /data/configs/startup.sh
   popd
 fi
-rm -rf /output/temp/auto/*.*
+rm -rf /output/auto/temp/*.*
 exec "$@"
