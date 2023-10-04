@@ -17,10 +17,13 @@ mkdir -vp ./data/models/Checkpoints \
   ./data/models/karlo \
   ./data/models/VAE
 echo "Step 1 is done..."
-echo "Step 2 - We will download everything needed..."
-echo "This is the last step and will take some time!"
-read -p "Have you read and setup the .env-file? (yes/no) " yn
-
+echo "In Step 2 we will setup your environment..."
+if[! - f .env]; then
+  cp .env.default .env
+fi
+echo "Step 2 - You can leave your .env-file on default values if you like."
+echo "Step 2 - But I highly recommend that you at least go through it!"
+read -p "Step 2 - Have you gone through the .env-file and modified it to your likings? (yes/no) " yn
 case $yn in
 	yes ) echo ok, we will proceed;;
 	no ) echo exiting...;
@@ -28,6 +31,8 @@ case $yn in
 	* ) echo invalid response;
 		exit 1;;
 esac
+echo "Step 3 - We will download everything needed..."
+echo "This is the last step and will take some time!"
 
 echo "Running download-container to get all requirements..."
 docker compose --profile download up --build
