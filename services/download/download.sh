@@ -7,7 +7,7 @@ echo "Downloading, this might take a while..."
 if [ "$INSTALL_DOWNLOAD_BASE_MODELS" == "1" ]
 then
   echo "Downloading SD-1.5-Basemodels..."
-  aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/checkpoints.download --dir /data/models --continue
+  aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/checkpoints.download --dir /data/checkpoints --continue
 fi
 
 if [ "$INSTALL_DOWNLOAD_BASE_VAE" == "1" ]
