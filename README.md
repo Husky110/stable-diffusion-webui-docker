@@ -4,8 +4,8 @@ In general he did a really great job providing a platform to run Stable Diffusio
 I think that there are some flaws in his work tho, which I want to try and resolve:
 - The docker-compose.yaml-file, while being elegant, is way to hard to edit for custom purposes.
 - All containers are set up in a way, that they run as root which then leads to permission-problems on the host-machine.
-- Setting up an environment that serves "everybody" is hard. Especially new people might struggle with leveraging the potential that some of the UIs offer.
-- The project itself is not really beginner-friendly. Be it for beginners to Stable Diffusion or beginners in docker.
+- Setting up an environment that serves "everybody" is hard. This repo aims to get a good base for people that use Stable-diffusion on a regular base and complete beginners.
+- The original project itself is not really beginner-friendly. Be it for beginners to Stable Diffusion or beginners in docker.
 
 ## How to use
 ### Setup
@@ -17,7 +17,7 @@ I think that there are some flaws in his work tho, which I want to try and resol
 
 ## State of the Fork
 ### What works
-- Download-Container
+- Installation and booting up A1111-WebUi
 - A1111 is loadable and does it's job -> still WIP
 
 ### What does not
@@ -30,18 +30,18 @@ I think that there are some flaws in his work tho, which I want to try and resol
 
 ## Changes to the original Repo and improvements
 - General:
-  - The docker-compose.yaml file is less elegant, but way better manageable.
-  - All direct-bind-mounts have been removed for volume-mounts.
+  - The docker-compose.yaml file is less elegant, but implemented in a way that it can leverage the .env-file.
+  - All direct-bind-mounts have been reworked to be completely customizable.
     - That process required some additional downloads in the download-container.
-  - All containers are set to run as user 1000:1000 to accommodate the change from direct bind-mounts to volumes.
+  - All containers are set to run as user 1000:1000 to accommodate the change in the bind-mounts.
 - A1111-SD-Webui:
   - The config-builder has been replaced with a working default-config.
-  - Clearing up all temp-images on container-start
+  - All temp-images will be removed on the start of the container. This prevents a stacking-affect over time. Just restart the container once in a while.
   - A1111 removed some vital settings from the main-ui to the Settings-Tab making them invisible. The following settings have been returned to the main-ui:
     - Restore Faces (txt2img/img2img)
     - Random-Source for seed (txt2img/img2img) -> set to CPU to make seeds more hardware-stable (see https://github.com/comfyanonymous/ComfyUI/discussions/118)
     - CLIP set last layer aka "CLIP-SKIP" (txt2img/img2img)
-  - The initial setup comes with some widely-used extensions preinstalled
+  - The initial setup comes with some widely-used extensions preinstalled (can be deactivated in the .env-file)
     - Regional Prompter (see https://github.com/hako-mikan/sd-webui-regional-prompter)
     - TiledVAE (see https://github.com/pkuliyi2015/multidiffusion-upscaler-for-automatic1111)
     - ControlNet (see https://github.com/Mikubill/sd-webui-controlnet)
@@ -49,20 +49,18 @@ I think that there are some flaws in his work tho, which I want to try and resol
 ## Added Problems
 Rarely any changes come without some problems that have to be solved in the future. Here they are:
  - System Requirements
-   - You have to use Linux (especially one with systemd - like Debian or Ubuntu). Mac and Windows are not supported (I don't know if WSL will work - use at your own risk!)
-     - This is due to limitations set by the local-persistent plugin for docker (see https://github.com/MatchbookLab/local-persist)
-     - If you can figure out a way to run this natively on CentOS or how to set it up properly on arch - feel free to contribute!
    - For now you are limited to NVIDIA-Graphic-cards if you want to use anything else than the CPU-Versions.
      - I will look into some changed suggested to make AMD-Cards useable, but having none myself, I can't promise anything.
      - The good news tho - All settings made are tested on a GTX 1070, which is not really a strong card, so there is a good chance that your old hardware actually supports this repo.
- - The install-process is a bit more complicated than in the original. It's a bit more than just running two commands. I did my best tho.
+ - The install-process is a bit more complicated when it runs into errors. You have to look out a bit, but in general everything should be very clear.
 
 ## Credits
 Most credits go to [AbdBarho](https://github.com/AbdBarho) for doing the pioneer work. I just added to that. :)
 
 ## Licence
 I left all original licences in their respected place.
-For now this repo comes "as is", with no warranties and I take no responsibility for what you do with it.
+This repo comes "as is", with no warranties and I take no responsibility for what you do with it.
+You agree to use this repo in accordance with your local law.
 
 # Original Content
 For the original documentation and everything see https://github.com/AbdBarho/stable-diffusion-webui-docker
