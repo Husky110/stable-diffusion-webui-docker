@@ -18,7 +18,7 @@ mkdir -vp ./data/models/Checkpoints \
   ./data/models/VAE
 echo "Step 1 is done..."
 echo "In Step 2 we will setup your environment..."
-if[! -f .env]; then
+if [ ! -f .env ]; then
   cp .env.default .env
 fi
 echo "Step 2 - You can leave your .env-file on default values if you like."
