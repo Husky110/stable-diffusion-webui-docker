@@ -39,7 +39,7 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: ${VOLUMES_GFPGAN}
-  LSDR:
+  LDSR:
     driver: local-persist
     driver_opts:
       mountpoint: ${VOLUMES_LDSR}
