@@ -22,6 +22,12 @@ then
   aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/upscalers.download --dir /data --continue
 fi
 
+if [ "$INSTALL_DOWNLOAD_BASE_FACEDETECTORS" == "1" ]
+then
+  echo "Checking SHAs for Base-Facedetectors..."
+  aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/upscalers.download --dir /data/Facedetectors --continue
+fi
+
 if [ "$INSTALL_A1111_REQUIREMENTS" == "1" ]
 then
   echo "Downloading A1111-Requirements..."
@@ -47,6 +53,14 @@ then
   echo "Checking SHAs for Base-Upscalers..."
   parallel --will-cite -a /docker/downloadlists/upscalers.sha256 "echo -n {} | sha256sum -c"
 fi
+
+if [ "$INSTALL_DOWNLOAD_BASE_FACEDETECTORS" == "1" ]
+then
+  echo "Checking SHAs for Base-Facedetectors..."
+  parallel --will-cite -a /docker/downloadlists/facedetectors.sha256 "echo -n {} | sha256sum -c"
+fi
+
+
 
 if [ "$INSTALL_A1111_REQUIREMENTS" == "1" ]
 then

@@ -9,6 +9,7 @@ RUN mkdir -p /data/checkpoints \
     /data/Codeformer \
     /data/RealESRGAN \
     /data/LDSR \
+    /data/Facedetectors \
     /data/karlo
 RUN chown -R 1000:1000 /data
 VOLUME /data/checkpoints \
@@ -18,6 +19,7 @@ VOLUME /data/checkpoints \
     /data/Codeformer \
     /data/RealESRGAN \
     /data/LDSR \
+    /data/Facedetectors \
     /data/karlo
 RUN chmod +x /docker/download.sh
 USER 1000:1000

@@ -30,11 +30,13 @@ services:
       - ${VOLUMES_CODEFORMER}:/data/Codeformer
       - ${VOLUMES_LDSR}:/data/LDSR
       - ${VOLUMES_KARLO}:/data/karlo
+      - ${VOLUMES_FACEDETECTORS}:/data/Facedetectors
     user: 1000:1000
     environment:
       - INSTALL_DOWNLOAD_BASE_MODELS=${INSTALL_DOWNLOAD_BASE_MODELS}
       - INSTALL_DOWNLOAD_BASE_VAE=${INSTALL_DOWNLOAD_BASE_VAE}
       - INSTALL_DOWNLOAD_BASE_UPSCALERS=${INSTALL_DOWNLOAD_BASE_UPSCALERS}
+      - INSTALL_DOWNLOAD_BASE_FACEDETECTORS=${INSTALL_DOWNLOAD_BASE_FACEDETECTORS}
       - INSTALL_A1111_REQUIREMENTS=${INSTALL_A1111_REQUIREMENTS}
 
   auto: &automatic
@@ -58,10 +60,10 @@ services:
       - ${VOLUMES_SWINIR}:/stable-diffusion-webui/models/SWINIR
       - ${VOLUMES_KARLO}:/stable-diffusion-webui/models/karlo
       - ${VOLUMES_CODEFORMER}:/stable-diffusion-webui/models/Codeformer
+      - ${VOLUMES_FACEDETECTORS}:/stable-diffusion-webui/repositories/CodeFormer/weights/facelib
       - ${VOLUMES_A1111_CONFIGS}:/data/configs
       - ${VOLUMES_A1111_CONFIGSTATES}:/stable-diffusion-webui/config_states
       - ${VOLUMES_A1111_EXTENSIONS}:/stable-diffusion-webui/extensions
-      - ${VOLUMES_A1111_CODEFOMER_WEIGHTS_FACELIB}:/stable-diffusion-webui/repositories/CodeFormer/weights/facelib
     environment:
       - CLI_ARGS=${A1111_CLI_ARGS}
       - A1111_INSTALL_RECOMMENDED_EXTENSION_REGIONALPROMPTER=${A1111_INSTALL_RECOMMENDED_EXTENSION_REGIONALPROMPTER}
