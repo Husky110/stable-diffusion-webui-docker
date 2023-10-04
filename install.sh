@@ -19,7 +19,8 @@ mkdir -vp ./data/models/Checkpoints \
   ./data/models/SwinIR \
   ./data/models/VAE-approx \
   ./data/models/karlo \
-  ./data/models/VAE
+  ./data/models/VAE \
+  ./output/auto
 echo "Step 1 is done..."
 echo "In Step 2 we will setup your environment..."
 echo "Step 2 - You can leave your .env-file on default values if you like."
