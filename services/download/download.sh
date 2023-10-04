@@ -25,7 +25,7 @@ fi
 if [ "$INSTALL_DOWNLOAD_BASE_FACEDETECTORS" == "1" ]
 then
   echo "Checking SHAs for Base-Facedetectors..."
-  aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/upscalers.download --dir /data/Facedetectors --continue
+  aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/facedetectors.download --dir /data/Facedetectors --continue
 fi
 
 if [ "$INSTALL_A1111_REQUIREMENTS" == "1" ]
