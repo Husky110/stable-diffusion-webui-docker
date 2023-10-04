@@ -31,3 +31,4 @@ esac
 
 echo "Running download-container to get all requirements..."
 docker compose --profile download up --build
+echo "If the last line was 'exited with code 0' you are done installing. If not - well... Have fun figuring out your error. :)"
