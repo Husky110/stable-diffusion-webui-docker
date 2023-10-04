@@ -27,6 +27,13 @@ I think that there are some flaws in his work tho, which I want to try and resol
 ### What is currently in development
 - I'm still working on A1111. It's done mostly, but the docker-stuff has to be improved.
 
+### Environment
+- This repo is tested on my old laptop with the following specs:
+  - Processor: Intel Core™ i7-7700HQ
+  - Graphics: GeForce GTX 1070 Mobile
+  - RAM: 64 GB
+  - OS: Ubuntu 22.04.3 LTS
+
 
 ## Changes to the original Repo and improvements
 - General:
@@ -50,9 +57,12 @@ I think that there are some flaws in his work tho, which I want to try and resol
 Rarely any changes come without some problems that have to be solved in the future. Here they are:
  - System Requirements
    - For now you are limited to NVIDIA-Graphic-cards if you want to use anything else than the CPU-Versions.
-     - I will look into some changed suggested to make AMD-Cards useable, but having none myself, I can't promise anything.
+     - I will look into some changes suggested to make AMD-Cards useable, but having none myself, I can't promise anything.
      - The good news tho - All settings made are tested on a GTX 1070, which is not really a strong card, so there is a good chance that your old hardware actually supports this repo.
  - The install-process is a bit more complicated when it runs into errors. You have to look out a bit, but in general everything should be very clear.
+ - Duplicates in FaceRestore- and ControlNet-Files
+   - Since A1111 and ComfyUI have a very different folder-structure in parts and due to the fact that I could not find a way to mount the ControlNet-Model-Folder properly, there might be duplicate files.
+     - This should not be "bad" but can be a bit inconvenient.
 
 ## Credits
 Most credits go to [AbdBarho](https://github.com/AbdBarho) for doing the pioneer work. I just added to that. :)
