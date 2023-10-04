@@ -20,7 +20,7 @@ fi
 #running initalization
 if [ ! -f ${ROOT}/docker-init-complete ]; then
   echo "Initializing..."
-  mkdir /output/temp
+  mkdir -p /output/temp
   cd ${ROOT}
 
   #adding recommended extensions
