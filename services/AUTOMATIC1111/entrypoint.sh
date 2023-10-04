@@ -18,7 +18,7 @@ if [ ! -f /data/configs/config.json ]; then
 fi
 
 #running initalization
-if [ ! -f /data/configs/docker-init-complete ]; then
+if [ ! -f ${ROOT}/docker-init-complete ]; then
   echo "Initializing..."
   mkdir /output/temp
   cd ${ROOT}
@@ -48,7 +48,7 @@ if [ ! -f /data/configs/docker-init-complete ]; then
   ln -s /data/configs/styles.csv styles.csv
 
   #finalizing
-  touch /data/configs/docker-init-complete
+  touch ${ROOT}/docker-init-complete
 fi
 
 echo "Installing extension dependencies (if any)"
