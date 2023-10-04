@@ -81,29 +81,42 @@ RUN --mount=type=cache,target=/root/.cache/pip \
   git reset --hard ${SHA} && \
   pip install -r requirements_versions.txt
 
-RUN rm -rf ${ROOT}/models #we don't need these here anymore...
-RUN rm -rf ${ROOT}/scripts #we don't need these here anymore...
+RUN mkdir -p /data/configs /output
+RUN chown -R 1000:1000 /data /output
 
-## and now we have to tamper with A1111's init-process, cause it does not like symlinks...
-#RUN sed -i '132d' ${ROOT}/modules/sd_models.py #for the checkpoint-folder
-#RUN sed -i '15d' ${ROOT}/modules/shared_init.py #for the hypernetworks-folder
+VOLUME /stable-diffusion-webui/models/Stable-diffusion \
+  /stable-diffusion-webui/models/Lora \
+  /stable-diffusion-webui/embeddings \
+  /stable-diffusion-webui/models/hypernetworks \
+  /stable-diffusion-webui/models/VAE \
+  /stable-diffusion-webui/models/VAE-approx \
+  /stable-diffusion-webui/models/ESRGAN \
+  /stable-diffusion-webui/models/RealESRGAN \
+  /stable-diffusion-webui/models/GFPGAN \
+  /stable-diffusion-webui/models/LSDR \
+  /stable-diffusion-webui/models/SWINIR \
+  /stable-diffusion-webui/models/karlo\
+  /stable-diffusion-webui/config_states \
+  /stable-diffusion-webui/extensions \
+  /stable-diffusion-webui/repositories/CodeFormer/weights/facelib \
+  /data/configs \
+  /output
+
 
 COPY --chown=1000 . /docker
 
 RUN chown -R 1000:1000 ${ROOT}
 
-RUN mkdir /data /output /codeformer_facelib ${ROOT}/models ${ROOT}/scripts /.cache /.config /.local
-RUN chown -R 1000:1000 /data /output /codeformer_facelib ${ROOT}/models /.cache /.config /.local
-VOLUME ["/data", "/output", "/codeformer_facelib", "${ROOT}/models", "${ROOT}/scripts", "/.cache", "/.config"]
+RUN mkdir /.cache /.config /.local
+RUN chown -R 1000:1000 /.cache /.config /.local
 
-# one of the ugliest hacks I ever wrote
+# one of the ugliest hacks I ever wrote <-- by AbdBarho
 RUN sed -i 's/in_app_dir = .*/in_app_dir = True/g' /usr/local/lib/python3.10/site-packages/gradio/routes.py
 
 USER 1000:1000
 
 RUN \
   python3 /docker/info.py ${ROOT}/modules/ui.py && mv ${ROOT}/style.css ${ROOT}/user.css
-  #git config --global --add safe.directory '*' <--- why do we need this!?
 
 WORKDIR ${ROOT}
 ENV NVIDIA_VISIBLE_DEVICES=all

@@ -56,6 +56,27 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: ${VOLUMES_KARLO}
+  # Services
+  A1111_codeformer_weights_facelib:
+      driver: local-persist
+      driver_opts:
+        mountpoint: ${VOLUMES_A1111_CONFIGS}
+  A1111_configs:
+      driver: local-persist
+      driver_opts:
+        mountpoint: ${VOLUMES_A1111_CONFIGS}
+  A1111_config_states:
+      driver: local-persist
+      driver_opts:
+        mountpoint: ${VOLUMES_A1111_CONFIGSTATES}
+  A1111_extensions:
+      driver: local-persist
+      driver_opts:
+        mountpoint: ${VOLUMES_A1111_EXTENSIONS}
+  A1111_output:
+    driver: local-persist
+    driver_opts:
+      mountpoint: ${A1111_OUTPUT}
 
 
 # Containers und Services
@@ -100,15 +121,28 @@ services:
     build: ./services/AUTOMATIC1111
     image: sd-auto:67
     volumes:
-      - ./data/models:/stable-diffusion-webui/models
-      - ./data:/data
-      - ./data/auto/config_states:/stable-diffusion-webui/config_states
-      - ./data/auto/scripts:/stable-diffusion-webui/scripts
-      - ./output:/output
-      - ./caches/auto/codeformer_facelib:/codeformer_facelib
+      - A1111_output:/output
+      - checkpoints:/stable-diffusion-webui/models/Stable-diffusion
+      - loras:/stable-diffusion-webui/models/Lora
+      - embeddings:/stable-diffusion-webui/embeddings
+      - hypernetworks:/stable-diffusion-webui/models/hypernetworks
+      - vae:/stable-diffusion-webui/models/VAE
+      - vae_approx:/stable-diffusion-webui/models/VAE-approx
+      - ESRGAN:/stable-diffusion-webui/models/ESRGAN
+      - RealESRGAN:/stable-diffusion-webui/models/RealESRGAN
+      - GFPGAN:/stable-diffusion-webui/models/GFPGAN
+      - LSDR:/stable-diffusion-webui/models/LSDR
+      - SWINIR:/stable-diffusion-webui/models/SWINIR
+      - KARLO:/stable-diffusion-webui/models/karlo
+      - A1111_configs:/data/configs
+      - A1111_config_states:/stable-diffusion-webui/config_states
+      - A1111_extensions:/stable-diffusion-webui/extensions
+      - A1111_codeformer_weights_facelib:/stable-diffusion-webui/repositories/CodeFormer/weights/facelib
     environment:
-      # Warning: XFormers improves performance, but can mess with seeds! Use with caution...
-      - CLI_ARGS=--allow-code --medvram --xformers --enable-insecure-extension-access --api
+      - CLI_ARGS=${A1111_CLI_ARGS}
+      - A1111_INSTALL_RECOMMENDED_EXTENSION_REGIONALPROMPTER=${A1111_INSTALL_RECOMMENDED_EXTENSION_REGIONALPROMPTER}
+      - A1111_INSTALL_RECOMMENDED_EXTENSION_CONTROLNET=${A1111_INSTALL_RECOMMENDED_EXTENSION_CONTROLNET}
+      - A1111_INSTALL_RECOMMENDED_EXTENSION_TILEDVAE=${A1111_INSTALL_RECOMMENDED_EXTENSION_TILEDVAE}
 
   auto-cpu:
     <<: *automatic
