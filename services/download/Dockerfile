@@ -11,7 +11,9 @@ RUN mkdir -p /data/checkpoints \
     /data/LDSR \
     /data/Facedetectors \
     /data/karlo
+
 RUN chown -R 1000:1000 /data
+
 VOLUME /data/checkpoints \
     /data/VAE \
     /data/VAE-approx \
@@ -21,6 +23,7 @@ VOLUME /data/checkpoints \
     /data/LDSR \
     /data/Facedetectors \
     /data/karlo
+
 RUN chmod +x /docker/download.sh
 USER 1000:1000
 ENTRYPOINT ["/docker/download.sh"]

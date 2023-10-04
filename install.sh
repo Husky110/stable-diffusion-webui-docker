@@ -14,6 +14,7 @@ mkdir -vp ./data/models/Checkpoints \
   ./data/models/Embeddings \
   ./data/models/GFPGAN \
   ./data/models/RealESRGAN \
+  ./data/models/Facedetectors \
   ./data/models/LDSR \
   ./data/models/SwinIR \
   ./data/models/VAE-approx \
