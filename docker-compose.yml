@@ -131,7 +131,7 @@ services:
       - ESRGAN:/stable-diffusion-webui/models/ESRGAN
       - RealESRGAN:/stable-diffusion-webui/models/RealESRGAN
       - GFPGAN:/stable-diffusion-webui/models/GFPGAN
-      - LSDR:/stable-diffusion-webui/models/LSDR
+      - LDSR:/stable-diffusion-webui/models/LSDR
       - SWINIR:/stable-diffusion-webui/models/SWINIR
       - KARLO:/stable-diffusion-webui/models/karlo
       - A1111_configs:/data/configs

@@ -43,5 +43,5 @@ case $yn in
 		exit 1;;
 esac
 
-#echo "Running download-container to get all requirements..."
-#docker compose --profile download up --build
+echo "Running download-container to get all requirements..."
+docker compose --profile download up --build
