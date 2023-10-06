@@ -29,9 +29,9 @@ aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/a1111-requirement
 echo "Checking SHAs for A1111-Requirements..."
 parallel --will-cite -a /docker/downloadlists/a1111-requirements.sha256 "echo -n {} | sha256sum -c"
 echo "Downloading Basic-FaceRestore-Requirements..."
-aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/facedetectors.download --dir /data --continue
+aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/facerestore.download --dir /data --continue
 echo "Checking SHAs for Basic-FaceRestore-Requirements..."
-parallel --will-cite -a /docker/downloadlists/facedetectors.sha256 "echo -n {} | sha256sum -c"
+parallel --will-cite -a /docker/downloadlists/facerestore.sha256 "echo -n {} | sha256sum -c"
 
 cat <<EOF
 By using this software, you agree to the following licenses:

@@ -61,6 +61,8 @@ Rarely any changes come without some problems that have to be solved in the futu
    - For now you are limited to NVIDIA-Graphic-cards if you want to use anything else than the CPU-Versions.
      - I will look into some changes suggested to make AMD-Cards useable, but having none myself, I can't promise anything.
      - The good news tho - All settings made are tested on a GTX 1070, which is not really a strong card, so there is a good chance that your old hardware actually supports this repo.
+   - The OS might be limited to Linux for now.
+     - There are maaaaany links in the docker-compose.yaml-file that are all with Linux-Path-separators. I am not sure if or how well they translate to Windows...
  - The install-process is a bit more complicated when it runs into errors. You have to look out a bit, but in general everything should be very clear.
  - Duplicates in FaceRestore- and ControlNet-Files
    - Since A1111 and ComfyUI have a very different folder-structure in parts and due to the fact that I could not find a way to mount the ControlNet-Model-Folder properly, there might be duplicate files.
