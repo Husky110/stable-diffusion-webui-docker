@@ -8,65 +8,30 @@ if [ "$INSTALL_DOWNLOAD_BASE_MODELS" == "1" ]
 then
   echo "Downloading SD-1.5-Basemodels..."
   aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/checkpoints.download --dir /data/checkpoints --continue
-fi
-
-if [ "$INSTALL_DOWNLOAD_BASE_VAE" == "1" ]
-then
-  echo "Downloading Base-VAEs..."
-  aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/vae.download --dir /data/VAE --continue
-fi
-
-if [ "$INSTALL_DOWNLOAD_BASE_UPSCALERS" == "1" ]
-then
-  echo "Downloading Base-Upscalers..."
-  aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/upscalers.download --dir /data --continue
-fi
-
-if [ "$INSTALL_DOWNLOAD_BASE_FACEDETECTORS" == "1" ]
-then
-  echo "Checking SHAs for Base-Facedetectors..."
-  aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/facedetectors.download --dir /data --continue
-fi
-
-if [ "$INSTALL_A1111_REQUIREMENTS" == "1" ]
-then
-  echo "Downloading A1111-Requirements..."
-  aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/a1111-requirements.download --dir /data --continue
-fi
-
-echo "Checking SHAs..."
-
-if [ "$INSTALL_DOWNLOAD_BASE_MODELS" == "1" ]
-then
   echo "Checking SHAs for SD-1.5-Basemodels..."
   parallel --will-cite -a /docker/downloadlists/checkpoints.sha256 "echo -n {} | sha256sum -c"
 fi
 
 if [ "$INSTALL_DOWNLOAD_BASE_VAE" == "1" ]
 then
+  echo "Downloading Base-VAEs..."
+  aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/vae.download --dir /data/VAE --continue
   echo "Checking SHAs for Base-VAEs..."
   parallel --will-cite -a /docker/downloadlists/vae.sha256 "echo -n {} | sha256sum -c"
 fi
 
-if [ "$INSTALL_DOWNLOAD_BASE_UPSCALERS" == "1" ]
-then
-  echo "Checking SHAs for Base-Upscalers..."
-  parallel --will-cite -a /docker/downloadlists/upscalers.sha256 "echo -n {} | sha256sum -c"
-fi
-
-if [ "$INSTALL_DOWNLOAD_BASE_FACEDETECTORS" == "1" ]
-then
-  echo "Checking SHAs for Base-Facedetectors..."
-  parallel --will-cite -a /docker/downloadlists/facedetectors.sha256 "echo -n {} | sha256sum -c"
-fi
-
-
-
-if [ "$INSTALL_A1111_REQUIREMENTS" == "1" ]
-then
-  echo "Checking SHAs for A1111-Requirements..."
-  parallel --will-cite -a /docker/downloadlists/a1111-requirements.sha256 "echo -n {} | sha256sum -c"
-fi
+echo "Downloading Base-Upscalers..."
+aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/upscalers.download --dir /data --continue
+echo "Checking SHAs for Base-Upscalers..."
+parallel --will-cite -a /docker/downloadlists/upscalers.sha256 "echo -n {} | sha256sum -c"
+echo "Downloading A1111-Requirements..."
+aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/a1111-requirements.download --dir /data --continue
+echo "Checking SHAs for A1111-Requirements..."
+parallel --will-cite -a /docker/downloadlists/a1111-requirements.sha256 "echo -n {} | sha256sum -c"
+echo "Downloading Basic-FaceRestore-Requirements..."
+aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/facedetectors.download --dir /data --continue
+echo "Checking SHAs for Basic-FaceRestore-Requirements..."
+parallel --will-cite -a /docker/downloadlists/facedetectors.sha256 "echo -n {} | sha256sum -c"
 
 cat <<EOF
 By using this software, you agree to the following licenses:

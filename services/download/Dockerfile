@@ -5,11 +5,9 @@ COPY --chown=1000:1000 . /docker
 RUN mkdir -p /data/checkpoints \
     /data/VAE \
     /data/VAE-approx \
-    /data/GFPGAN \
-    /data/Codeformer \
+    /data/FaceRestore \
     /data/RealESRGAN \
     /data/LDSR \
-    /data/Facedetectors \
     /data/karlo
 
 RUN chown -R 1000:1000 /data
@@ -17,11 +15,9 @@ RUN chown -R 1000:1000 /data
 VOLUME /data/checkpoints \
     /data/VAE \
     /data/VAE-approx \
-    /data/GFPGAN \
-    /data/Codeformer \
+    /data/FaceRestore \
     /data/RealESRGAN \
     /data/LDSR \
-    /data/Facedetectors \
     /data/karlo
 
 RUN chmod +x /docker/download.sh

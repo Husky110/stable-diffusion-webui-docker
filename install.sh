@@ -9,12 +9,12 @@ mkdir -vp ./data/models/Checkpoints \
   ./data/models/Lora \
   ./data/models/Hypernetworks \
   ./data/models/ControlNet \
-  ./data/models/Codeformer \
+  ./data/models/FaceRestore/Codeformer \
+  ./data/models/FaceRestore/GFPGAN \
+  ./data/models/FaceRestore/Detectors \
   ./data/models/ESRGAN \
   ./data/models/Embeddings \
-  ./data/models/GFPGAN \
   ./data/models/RealESRGAN \
-  ./data/models/Facedetectors \
   ./data/models/LDSR \
   ./data/models/SwinIR \
   ./data/models/VAE-approx \
