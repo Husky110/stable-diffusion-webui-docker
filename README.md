@@ -17,6 +17,11 @@ I think that there are some flaws in his work tho, which I want to try and resol
 ### Usage
 1. run `docker compose --profile [ui] up --build` -> where [ui] is one of invoke, auto, auto-cpu, comfy, or comfy-cpu.
 
+### Notes regarding the softwares:
+##### A1111-WebUI:
+- If you use the ControlNet-Extension, it will download the respective used Annotators.
+So the first time you use a "Preprocessor" might take a bit. The ControlNet-Models themselves are being downloaded - in the SD- (controlnet_vp_...) and XL-variants.
+
 ## State of the Fork
 ### What works
 - Installation and booting up A1111-WebUi
