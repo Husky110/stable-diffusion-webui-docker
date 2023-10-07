@@ -54,6 +54,7 @@ services:
       - ${VOLUMES_LDSR}:/stable-diffusion-webui/models/LSDR
       - ${VOLUMES_SWINIR}:/stable-diffusion-webui/models/SWINIR
       - ${VOLUMES_KARLO}:/stable-diffusion-webui/models/karlo
+      - ${VOLUMES_CONTROLNET}/models:/stable-diffusion-webui/models/ControlNet
       - ${VOLUMES_FACERESTORE}/GFPGAN:/stable-diffusion-webui/models/GFPGAN
       - ${VOLUMES_FACERESTORE}/Codeformer:/stable-diffusion-webui/models/Codeformer
       - ${VOLUMES_FACERESTORE}/Detectors/detection_Resnet50_Final.pth:/stable-diffusion-webui/repositories/CodeFormer/weights/facelib/detection_Resnet50_Final.pth
