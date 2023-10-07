@@ -4,6 +4,8 @@ set -Eeuo pipefail
 
 echo "Downloading, this might take a while..."
 
+DOWNLOAD_CONTROLNET_ANNOTATORS= $([ "$A1111_INSTALL_RECOMMENDED_EXTENSION_CONTROLNET" == "1" ] && 1 || 0)
+
 if [ "$INSTALL_DOWNLOAD_BASE_MODELS" == "1" ]
 then
   echo "Downloading SD-1.5-Basemodels..."
@@ -19,6 +21,16 @@ then
   echo "Checking SHAs for Base-VAEs..."
   parallel --will-cite -a /docker/downloadlists/vae.sha256 "echo -n {} | sha256sum -c"
 fi
+
+if [ "$DOWNLOAD_CONTROLNET_ANNOTATORS" == "1" ]
+then
+  echo "Downloading ControlNet-Models..."
+  aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/controlnet.download --dir /data/ControlNet --continue
+  #echo "Checking SHAs for Base-VAEs..."
+  #parallel --will-cite -a /docker/downloadlists/vae.sha256 "echo -n {} | sha256sum -c"
+fi
+
+
 
 echo "Downloading Base-Upscalers..."
 aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/upscalers.download --dir /data --continue
