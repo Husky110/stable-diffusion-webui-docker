@@ -26,8 +26,8 @@ if [ "$DOWNLOAD_CONTROLNET_ANNOTATORS" == "1" ]
 then
   echo "Downloading ControlNet-Models..."
   aria2c -x 10 --disable-ipv6 --input-file /docker/downloadlists/controlnet.download --dir /data/ControlNet --continue
-  #echo "Checking SHAs for Base-VAEs..."
-  #parallel --will-cite -a /docker/downloadlists/vae.sha256 "echo -n {} | sha256sum -c"
+  echo "Checking SHAs for ControlNet-Models..."
+  parallel --will-cite -a /docker/downloadlists/controlnet.sha256 "echo -n {} | sha256sum -c"
 fi
 
 
