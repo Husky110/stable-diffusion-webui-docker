@@ -11,7 +11,6 @@ mkdir -vp ./data/models/Checkpoints \
   ./data/models/ControlNet \
   ./data/models/ControlNet/models/sd \
   ./data/models/ControlNet/models/xl \
-  ./data/models/ControlNet/annotators \
   ./data/models/FaceRestore/Codeformer \
   ./data/models/FaceRestore/GFPGAN \
   ./data/models/FaceRestore/Detectors \
