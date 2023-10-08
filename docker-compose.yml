@@ -51,7 +51,7 @@ services:
       - ${VOLUMES_VAE_APPROX}:/stable-diffusion-webui/models/VAE-approx
       - ${VOLUMES_ESRGAN}:/stable-diffusion-webui/models/ESRGAN
       - ${VOLUMES_REALESRGAN}:/stable-diffusion-webui/models/RealESRGAN
-      - ${VOLUMES_LDSR}:/stable-diffusion-webui/models/LSDR
+      - ${VOLUMES_LDSR}:/stable-diffusion-webui/models/LDSR
       - ${VOLUMES_SWINIR}:/stable-diffusion-webui/models/SWINIR
       - ${VOLUMES_KARLO}:/stable-diffusion-webui/models/karlo
       - ${VOLUMES_CONTROLNET}/models:/stable-diffusion-webui/models/ControlNet

@@ -1,10 +1,10 @@
 ## Fork-Purpose
 The main purpose of this fork is to take the work done by [AbdBarho](https://github.com/AbdBarho) and fix some issues with it.
 In general he did a really great job providing a platform to run Stable Diffusion on Docker.
-I think that there are some flaws in his work tho, which I want to try and resolve:
-- The docker-compose.yaml-file, while being elegant, is way to hard to edit for custom purposes.
+For me personally there are some flaws in his work tho, which I want to try and resolve:
+- The docker-compose.yaml-file, while being elegant, is way too hard to edit for custom purposes.
 - All containers are set up in a way, that they run as root which then leads to permission-problems on the host-machine.
-- Setting up an environment that serves "everybody" is hard. This repo aims to get a good base for people that use Stable-diffusion on a regular base and complete beginners.
+- Setting up an environment that serves "everybody" is hard. This repo aims to get a good base for people that use Stable-diffusion on a regular basis and complete beginners.
 - The original project itself is not really beginner-friendly. Be it for beginners to Stable Diffusion or beginners in docker.
 
 ## How to use
@@ -15,7 +15,9 @@ I think that there are some flaws in his work tho, which I want to try and resol
 **WARNING:** Different to other web-projects you might know - please do NOT just copy the .env.default-file to .env and start modifying!
    The install-script does that for you and adds some modifications on the first run! You don't want to do them by hand!
 ### Usage
-1. run `docker compose --profile [ui] up --build` -> where [ui] is one of invoke, auto, auto-cpu, comfy, or comfy-cpu.
+#### You have two ways to start your containers:
+1. run `./run.sh`, select your containers, press Enter and Go.
+2. run `docker compose --profile [ui] up --build` -> where [ui] is one of invoke, auto, auto-cpu, comfy, or comfy-cpu if you want to start your containers manually.
 
 ### Notes regarding the softwares:
 ##### A1111-WebUI:
@@ -25,14 +27,14 @@ So the first time you use a "Preprocessor" might take a bit. The ControlNet-Mode
 ## State of the Fork
 ### What works
 - Installation and booting up A1111-WebUi
-- A1111 is loadable and does it's job -> still WIP
+- A1111 should be working normally
 
 ### What does not
 - ComfyUI (will be done next)
 - InvokeAI
 
 ### What is currently in development
-- I'm still working on A1111. It's done mostly, but the docker-stuff has to be improved.
+- Right now I'm looking into brining up ComfyUI
 
 ### Environment
 - This repo is tested on my old laptop with the following specs:
@@ -53,12 +55,13 @@ So the first time you use a "Preprocessor" might take a bit. The ControlNet-Mode
   - All temp-images will be removed on the start of the container. This prevents a stacking-affect over time. Just restart the container once in a while.
   - A1111 removed some vital settings from the main-ui to the Settings-Tab making them invisible. The following settings have been returned to the main-ui:
     - Restore Faces (txt2img/img2img)
-    - Random-Source for seed (txt2img/img2img) -> set to CPU to make seeds more hardware-stable (see https://github.com/comfyanonymous/ComfyUI/discussions/118)
+    - Random-Source for seed (txt2img/img2img) -> set to CPU to make seeds better shareable (see https://github.com/comfyanonymous/ComfyUI/discussions/118)
     - CLIP set last layer aka "CLIP-SKIP" (txt2img/img2img)
-  - The initial setup comes with some widely-used extensions preinstalled (can be deactivated in the .env-file)
+  - The initial setup comes with some widely-used extensions preinstalled (can be deactivated in the .env-file) those extensions are:
     - Regional Prompter (see https://github.com/hako-mikan/sd-webui-regional-prompter)
     - TiledVAE (see https://github.com/pkuliyi2015/multidiffusion-upscaler-for-automatic1111)
     - ControlNet (see https://github.com/Mikubill/sd-webui-controlnet)
+  - The Download-Container installs most external requirements
 
 ## Added Problems
 Rarely any changes come without some problems that have to be solved in the future. Here they are:
@@ -69,9 +72,9 @@ Rarely any changes come without some problems that have to be solved in the futu
    - The OS might be limited to Linux for now.
      - There are maaaaany links in the docker-compose.yaml-file that are all with Linux-Path-separators. I am not sure if or how well they translate to Windows...
  - The install-process is a bit more complicated when it runs into errors. You have to look out a bit, but in general everything should be very clear.
- - Duplicates in FaceRestore- and ControlNet-Files
-   - Since A1111 and ComfyUI have a very different folder-structure in parts and due to the fact that I could not find a way to mount the ControlNet-Model-Folder properly, there might be duplicate files.
-     - This should not be "bad" but can be a bit inconvenient.
+ - Possible Duplicates in FaceRestore- and ControlNet-Files
+   - A1111 and ComfyUI are sometimes not compatible in their folder-structures. Therefore, some duplicate files are possible.
+     - This should not be considered "bad" but more "inconvenient".
 
 ## Credits
 Most credits go to [AbdBarho](https://github.com/AbdBarho) for doing the pioneer work. I just added to that. :)
