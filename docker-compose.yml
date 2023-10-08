@@ -41,7 +41,7 @@ services:
     build: ./services/AUTOMATIC1111
     image: sd-auto:67
     ports:
-      - "7860:${A1111_PORT}"
+      - "${A1111_PORT:-7860}:7860"
     volumes:
       - ${VOLUMES_CHECKPOINTS}:/stable-diffusion-webui/models/Stable-diffusion
       - ${VOLUMES_LORAS}:/stable-diffusion-webui/models/Lora
