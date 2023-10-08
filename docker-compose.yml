@@ -3,8 +3,6 @@ version: '3.9'
 
 # Containers und Services
 x-base_service: &base_service
-  ports:
-    - "${WEBUI_PORT:-7860}:7860"
   stop_signal: SIGKILL
   tty: true
   deploy:
@@ -42,6 +40,8 @@ services:
     container_name: "sd-auto-gpu"
     build: ./services/AUTOMATIC1111
     image: sd-auto:67
+    ports:
+      - "7860:${A1111_PORT}"
     volumes:
       - ${VOLUMES_CHECKPOINTS}:/stable-diffusion-webui/models/Stable-diffusion
       - ${VOLUMES_LORAS}:/stable-diffusion-webui/models/Lora
