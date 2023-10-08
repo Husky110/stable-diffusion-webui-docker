@@ -9,11 +9,12 @@
   "outdir_save": "/output/saved",
   "outdir_init_images": "/output/init-images",
   "font": "DejaVuSans.ttf",
-  "temp_dir": "/output/temp/auto",
+  "temp_dir": "/output/temp",
   "extra_options_txt2img": [
     "CLIP_stop_at_last_layers",
     "face_restoration",
     "face_restoration_model",
+    "code_former_weight",
     "face_restoration_unload",
     "randn_source"
   ],
@@ -21,6 +22,7 @@
     "CLIP_stop_at_last_layers",
     "face_restoration",
     "face_restoration_model",
+    "code_former_weight",
     "face_restoration_unload",
     "randn_source"
   ],

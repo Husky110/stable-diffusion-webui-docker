@@ -1,0 +1,2 @@
+If you are a beginner and/or look for guides, different Checkpoints, LoRAs and such, civit.ai is a good place to start.
+If you look for different Upscalers, check https://openmodeldb.info
