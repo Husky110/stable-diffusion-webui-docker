@@ -12,8 +12,6 @@ For me personally there are some flaws in his work tho, which I want to try and 
 1. Set up docker (see https://docs.docker.com/engine/install/) -> This repo is tested on Ubuntu 22.04 LTS
 2. Run `./install.sh`, answer its questions and wait for it to finish
 
-**WARNING:** Different to other web-projects you might know - please do NOT just copy the .env.default-file to .env and start modifying!
-   The install-script does that for you and adds some modifications on the first run! You don't want to do them by hand!
 ### Usage
 #### You have two ways to start your containers:
 1. run `./run.sh`, select your containers, press Enter and Go.
