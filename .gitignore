@@ -1,7 +1,8 @@
 /.devcontainer
 /docker-compose.override.yml
 /.idea
+.env
+./devscripts
 # VSCode specific
 *.code-workspace
 /.vscode
-.env
